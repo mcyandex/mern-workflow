@@ -7,6 +7,7 @@ import { DatabaseModule } from 'src/database/database.module';
 import { CustomersService } from 'src/services/customers.service';
 import { ProductsService } from 'src/services/products.service';
 import { PurchasesService } from 'src/services/purchases.service';
+import { CustomersResolver } from './graphql/customers.resolver';
 import { ProductsResolver } from './graphql/products.resolver';
 import { PurchasesResolver } from './graphql/purchases.resolver';
 
@@ -24,6 +25,7 @@ import { PurchasesResolver } from './graphql/purchases.resolver';
     ProductsService,
     PurchasesResolver,
     PurchasesService,
+    CustomersResolver,
     CustomersService,
   ],
 })
