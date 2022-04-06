@@ -10,10 +10,10 @@ import {
 import { CustomersService } from 'src/services/customers.service';
 import { ProductsService } from 'src/services/products.service';
 import { PurchasesService } from 'src/services/purchases.service';
-import { AuthorizationGuard } from '../auth/authorization.guard';
-import { AuthUser, CurrentUser } from '../auth/current-user';
-import { createPurchaseInput } from './inputs/create-purchase-input';
-import { Purchase } from './models/purchase';
+import { AuthorizationGuard } from '../../auth/authorization.guard';
+import { AuthUser, CurrentUser } from '../../auth/current-user';
+import { createPurchaseInput } from '.././inputs/create-purchase-input';
+import { Purchase } from '.././models/purchase';
 
 @Resolver(() => Purchase)
 export class PurchasesResolver {
