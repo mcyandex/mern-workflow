@@ -1,30 +1,41 @@
-import type { GetServerSideProps, NextPage } from 'next'
-import { getSession } from '@auth0/nextjs-auth0'
+import type { NextPage } from "next";
+import { useUser, withPageAuthRequired } from "@auth0/nextjs-auth0";
+import { withApollo } from "../lib/withApollo";
+import {
+  getServerPageGetProducts,
+  ssrGetProducts,
+} from "../graphql/generated/page";
+import { useMeQuery } from "../graphql/generated/graphql";
 
-const Home: NextPage = () => {
-  return null
-}
+const Home: NextPage = ({ data }: any) => {
+  const { user } = useUser();
 
-export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
-  const session = getSession(req, res)
+  // const { data, loading, error } = useGetProductsQuery();
 
-  console.log(session?.accessToken)
+  const { data: me } = useMeQuery();
 
-  if (!session) {
+  return (
+    <div>
+      <h1>Hello {user?.name}</h1>
+      <pre>
+        <code>{JSON.stringify(user, null, 2)}</code>
+      </pre>
+      {/* <pre>
+        <code>{JSON.stringify(data.products, null, 2)}</code>
+      </pre> */}
+      <pre>
+        <code>{JSON.stringify(me, null, 2)}</code>
+      </pre>
+    </div>
+  );
+};
+
+export const getServerSideProps = withPageAuthRequired({
+  getServerSideProps: async (ctx) => {
     return {
-      redirect: {
-        destination: '/api/auth/login',
-        permanent: false
-      }
-    }
-  } else {
-    return {
-      redirect: {
-        destination: '/app',
-        permanent: false,
-      }
-    }
-  }
-}
+      props: {},
+    };
+  },
+});
 
-export default Home
+export default withApollo(ssrGetProducts.withPage()(Home));
